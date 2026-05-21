@@ -188,7 +188,99 @@ window.onload = () => {
       ) {
         // score + 1
         score++
+        // =========================
+// QUESTIONS SYSTEM
+// =========================
 
+let questions = [
+  {
+    verb: "Go",
+    correct: "Ir",
+    wrong: "Comer",
+  },
+  {
+    verb: "Eat",
+    correct: "Comer",
+    wrong: "Dormir",
+  },
+  {
+    verb: "Write",
+    correct: "Escribir",
+    wrong: "Correr",
+  },
+  {
+    verb: "Read",
+    correct: "Leer",
+    wrong: "Beber",
+  },
+  {
+    verb: "Sleep",
+    correct: "Dormir",
+    wrong: "Saltar",
+  },
+  {
+    verb: "Run",
+    correct: "Correr",
+    wrong: "Cantar",
+  },
+  {
+    verb: "Drink",
+    correct: "Beber",
+    wrong: "Caminar",
+  },
+]
+
+direction = 'stop'
+
+let randomQuestion =
+  questions[Math.floor(Math.random() * questions.length)]
+
+let answer1 = randomQuestion.correct
+let answer2 = randomQuestion.wrong
+
+// randomize answers
+if (Math.random() > 0.5) {
+  ;[answer1, answer2] = [answer2, answer1]
+}
+
+let answered = false
+
+let timer = setTimeout(() => {
+  if (!answered) {
+    alert("Time is over!")
+    gameOver.style.display = 'flex'
+    gameOverSound.play()
+    natureSound.pause()
+    chillMusic.pause()
+  }
+}, 10000)
+
+let userAnswer = prompt(
+  `What is the translation of "${randomQuestion.verb}"?\n\n` +
+    `1. ${answer1}\n` +
+    `2. ${answer2}\n\n` +
+    `Write 1 or 2\n\n` +
+    `You have 10 seconds`
+)
+
+answered = true
+clearTimeout(timer)
+
+let selectedAnswer = ''
+
+if (userAnswer == '1') {
+  selectedAnswer = answer1
+} else if (userAnswer == '2') {
+  selectedAnswer = answer2
+}
+
+if (selectedAnswer !== randomQuestion.correct) {
+  gameOver.style.display = 'flex'
+  gameOverSound.play()
+  natureSound.pause()
+  chillMusic.pause()
+  return
+}
         // // play sound first time player eats coin
         // if (score >= 0 && score < 2) {
         //     budgieSound.play()
@@ -260,3 +352,4 @@ window.onload = () => {
     }
   })
 }
+
